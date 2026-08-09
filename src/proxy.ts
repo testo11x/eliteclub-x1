@@ -1,9 +1,9 @@
 import { type NextRequest } from 'next/server'
 import { updateSession } from '@/utils/supabase/middleware'
 
-export const runtime = 'edge'
+export const runtime = 'experimental-edge'
 
-export default async function middleware(request: NextRequest) {
+export default async function proxy(request: NextRequest) {
   return await updateSession(request)
 }
 
