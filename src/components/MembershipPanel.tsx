@@ -80,18 +80,19 @@ export default function MembershipPanel({ memberships }: { memberships: Product[
           </div>
 
           <div className="space-y-4 mb-10">
+            {/* Base Tier Features - Included in both */}
             <div className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/5">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-red-500/20 text-red-500">
-                <MapPin className="w-5 h-5" />
+                <Users className="w-5 h-5" />
               </div>
-              <span className="text-sm text-zinc-300 font-medium">Exclusive Car Meets & Drives</span>
+              <span className="text-sm text-zinc-300 font-medium">Connect and network with fellow car enthusiasts</span>
             </div>
 
             <div className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/5">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-red-500/20 text-red-500">
                 <Star className="w-5 h-5" />
               </div>
-              <span className="text-sm text-zinc-300 font-medium">Features, Reposts & Collabs</span>
+              <span className="text-sm text-zinc-300 font-medium">Exclusive member perks and updates</span>
             </div>
 
             <div className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/5">
@@ -101,12 +102,41 @@ export default function MembershipPanel({ memberships }: { memberships: Product[
               <span className="text-sm text-zinc-300 font-medium">GermanGears WhatsApp Group</span>
             </div>
 
-            <div className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/5">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-red-500/20 text-red-500">
-                <Users className="w-5 h-5" />
+            {/* Base Tier Only */}
+            {selectedPlan.price < 9000 && (
+              <div className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/5">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-red-500/20 text-red-500">
+                  <Check className="w-5 h-5" />
+                </div>
+                <span className="text-sm text-zinc-300 font-medium">And more...</span>
               </div>
-              <span className="text-sm text-zinc-300 font-medium">Brand Collaboration Opportunities</span>
-            </div>
+            )}
+
+            {/* Elite Tier Exclusive Features */}
+            {selectedPlan.price >= 9000 && (
+              <>
+                <div className="flex items-center gap-4 bg-[#dc2626]/20 p-4 rounded-2xl border border-[#dc2626]/30">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-red-500 text-white">
+                    <MapPin className="w-5 h-5" />
+                  </div>
+                  <span className="text-sm text-white font-medium">Exclusive Car Meets & VIP Drives</span>
+                </div>
+
+                <div className="flex items-center gap-4 bg-[#dc2626]/20 p-4 rounded-2xl border border-[#dc2626]/30">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-red-500 text-white">
+                    <Check className="w-5 h-5" />
+                  </div>
+                  <span className="text-sm text-white font-medium">Brand Collaboration Opportunities</span>
+                </div>
+
+                <div className="flex items-center gap-4 bg-[#dc2626]/20 p-4 rounded-2xl border border-[#dc2626]/30">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-red-500 text-white">
+                    <Star className="w-5 h-5" />
+                  </div>
+                  <span className="text-sm text-white font-medium">Priority Features, Reposts & Collabs</span>
+                </div>
+              </>
+            )}
           </div>
 
           <button 
@@ -118,57 +148,82 @@ export default function MembershipPanel({ memberships }: { memberships: Product[
         </div>
 
         {/* Right Side: Swipable Reels Carousel (Takes up 7 columns) */}
-        <div className="lg:col-span-7 h-full flex flex-col justify-center">
-          <div className="flex items-center justify-between mb-6 px-2">
-            <h4 className="text-xl font-bold text-white uppercase tracking-wider flex items-center gap-2">
-              Club <span className="text-red-500">Highlights</span>
-            </h4>
-          </div>
-          
-          <div className="w-[300px] sm:w-[320px] mx-auto relative group">
-            {/* Slider container */}
-            <div className="overflow-hidden rounded-3xl shadow-2xl border border-white/10 bg-black">
-              <div 
-                className="flex transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]"
-                style={{ transform: `translateX(-${activeVideo * 100}%)` }}
-              >
-                {[
-                  "https://jumpshare.com/embed/03AuaP8mOuKVpxL5i9r1?title=0",
-                  "https://jumpshare.com/embed/cp0nkiShcQkz2yJbAUpG?title=0"
-                ].map((url, i) => (
-                  <div 
-                    key={i} 
-                    className="w-full flex-none aspect-[9/16] relative"
-                  >
-                    <iframe 
-                      id={`js_video_iframe_${i}`}
-                      src={url} 
-                      frameBorder="0" 
-                      allowFullScreen 
-                      style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-                    ></iframe>
+        <div className="lg:col-span-7 h-full flex flex-col justify-center items-center mt-12 lg:mt-0">
+          <div className="w-full max-w-[340px] relative group perspective-1000">
+            {/* Cinematic Glow Behind Phone */}
+            <div className="absolute -inset-4 bg-gradient-to-r from-red-600 to-orange-600 rounded-[3rem] blur-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none" />
+            
+            {/* The Mock Phone Frame */}
+            <div className="relative bg-black rounded-[3rem] p-2 sm:p-3 shadow-2xl border-[4px] border-zinc-800/80 ring-1 ring-white/10 z-10 overflow-hidden transform-gpu transition-transform duration-500 hover:scale-[1.02]">
+              
+              {/* Hardware elements: Notch / Dynamic Island */}
+              <div className="absolute top-0 inset-x-0 h-7 flex justify-center z-50 pointer-events-none">
+                <div className="w-24 h-6 bg-black rounded-b-2xl flex items-center justify-center gap-2 px-3 shadow-[0_2px_10px_rgba(0,0,0,0.5)]">
+                  <div className="w-1.5 h-1.5 rounded-full bg-zinc-800/80 border border-white/10" />
+                  <div className="w-2 h-2 rounded-full bg-indigo-900/40 border border-indigo-500/30 flex items-center justify-center">
+                    <div className="w-0.5 h-0.5 rounded-full bg-indigo-400" />
                   </div>
-                ))}
+                </div>
+              </div>
+
+              {/* Hardware elements: Side Buttons */}
+              <div className="absolute -left-[6px] top-24 w-1 h-8 bg-zinc-800 rounded-l-md" />
+              <div className="absolute -left-[6px] top-36 w-1 h-12 bg-zinc-800 rounded-l-md" />
+              <div className="absolute -left-[6px] top-52 w-1 h-12 bg-zinc-800 rounded-l-md" />
+              <div className="absolute -right-[6px] top-32 w-1 h-16 bg-zinc-800 rounded-r-md" />
+
+              {/* The Screen */}
+              <div className="relative rounded-[2.2rem] overflow-hidden bg-[#0a0a0a] aspect-[9/16]">
+                <div 
+                  className="flex transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] h-full"
+                  style={{ transform: `translateX(-${activeVideo * 100}%)` }}
+                >
+                  {[
+                    "https://jumpshare.com/embed/03AuaP8mOuKVpxL5i9r1?title=0",
+                    "https://jumpshare.com/embed/cp0nkiShcQkz2yJbAUpG?title=0"
+                  ].map((url, i) => (
+                    <div 
+                      key={i} 
+                      className="w-full h-full flex-none relative bg-zinc-900"
+                    >
+                      <iframe 
+                        id={`js_video_iframe_${i}`}
+                        src={url} 
+                        frameBorder="0" 
+                        allowFullScreen 
+                        className="absolute top-0 left-0 w-full h-full z-10"
+                      ></iframe>
+                      
+                      {/* Dark overlay at bottom to make UI elements pop */}
+                      <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-black/80 to-transparent z-20 pointer-events-none" />
+                    </div>
+                  ))}
+                </div>
+
+                {/* Internal UI Overlays */}
+                <div className="absolute bottom-6 inset-x-0 flex flex-col items-center justify-end z-30 pointer-events-none">
+                  {/* Floating Pagination inside the screen */}
+                  <div className="flex justify-center gap-2 mb-4 bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 pointer-events-auto shadow-xl">
+                    {[0, 1].map((i) => (
+                      <button
+                        key={i}
+                        onClick={() => scrollToVideo(i)}
+                        className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                          activeVideo === i 
+                            ? 'bg-red-500 w-5 shadow-[0_0_10px_rgba(220,38,38,0.8)]' 
+                            : 'bg-white/40 hover:bg-white/80'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  
+                  <div className="text-white/90 text-[10px] font-bold tracking-widest uppercase flex items-center gap-1.5 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 shadow-xl">
+                    <Play className="w-3 h-3 text-red-500 fill-red-500" /> Club Highlights
+                  </div>
+                </div>
+
               </div>
             </div>
-
-            {/* Pagination Dots */}
-            <div className="flex justify-center gap-2 mt-6">
-              {[0, 1].map((i) => (
-                <button
-                  key={i}
-                  onClick={() => scrollToVideo(i)}
-                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                    activeVideo === i 
-                      ? 'bg-red-500 w-6' 
-                      : 'bg-white/20 hover:bg-white/40'
-                  }`}
-                />
-              ))}
-            </div>
-            <p className="text-center text-xs text-zinc-500 mt-3 flex items-center justify-center gap-1">
-              Tap dots to see more
-            </p>
           </div>
         </div>
 

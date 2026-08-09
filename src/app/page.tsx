@@ -28,7 +28,7 @@ export default async function Home() {
       <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden bg-black">
         {/* Background Car Image */}
         <div 
-          className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-60"
+          className="absolute inset-0 z-0 bg-cover bg-[center_top] sm:bg-center bg-no-repeat opacity-60"
           style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=100&w=1920)' }}
         />
         
