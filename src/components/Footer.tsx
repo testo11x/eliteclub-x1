@@ -3,7 +3,7 @@ import { Mail, MapPin, Phone } from 'lucide-react'
 
 export default function Footer() {
   return (
-    <footer className="bg-black border-t border-white/5 pt-16 pb-8 mt-20 relative overflow-hidden">
+    <footer className="bg-black border-t border-white/5 pt-10 pb-8 relative overflow-hidden">
       {/* Subtle red accent gradient */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-red-600/5 blur-[120px] pointer-events-none" />
 
@@ -11,8 +11,9 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-12">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1 order-1">
-            <Link href="/" className="flex items-center gap-2 group mb-6">
-              <img src="/logo1.png" alt="GermanGearsIndia Logo" className="h-12 w-auto mix-blend-screen transform group-hover:-rotate-3 transition-transform" />
+            <Link href="/" className="flex flex-col items-start gap-4 group mb-6">
+              <img src="/logo1.png" alt="GermanGearsIndia Logo" className="h-20 w-auto mix-blend-screen transform group-hover:-rotate-3 transition-transform" />
+              <span className="text-white font-bold tracking-widest uppercase text-sm">German Gears India</span>
             </Link>
             <p className="text-sm text-zinc-400 leading-relaxed mb-6">
               The ultimate automotive lifestyle brand. Premium accessories, exclusive memberships, and unparalleled service for true enthusiasts.

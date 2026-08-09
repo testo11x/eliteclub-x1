@@ -197,14 +197,17 @@ export default function MembershipPanel({ memberships }: { memberships: Product[
                     className={`relative group w-full py-5 font-bold rounded-full transition-all duration-500 text-lg uppercase tracking-wider text-white flex items-center justify-center`}
                   >
                     <div className="absolute inset-0 rounded-full overflow-hidden z-0 transform-gpu [-webkit-mask-image:-webkit-radial-gradient(white,black)] bg-black">
-                      <div 
-                        className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
-                        style={{ backgroundImage: 'url(/4.gif)' }}
+                      <video 
+                        src="/carbon-button.mp4"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 pointer-events-none"
                       />
-                      <div className={`absolute inset-0 pointer-events-none transition-colors duration-300 ${selectedPlan.price >= 9000 ? 'bg-amber-900/50' : 'bg-red-900/50'}`} />
                       <div className="absolute inset-0 bg-black/30 pointer-events-none" />
                     </div>
-                    <span className="relative z-20 drop-shadow-lg flex items-center gap-2">
+                    <span className="relative z-20 drop-shadow-lg flex items-center gap-2 transition-transform duration-300 group-hover:scale-105">
                       Join Membership <span className="text-xl font-medium leading-none">→</span>
                     </span>
                   </button>

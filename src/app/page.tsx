@@ -1,6 +1,7 @@
 import { createClient } from '@/utils/supabase/server'
 import ProductCard from '@/components/ProductCard'
 import MembershipPanel from '@/components/MembershipPanel'
+import WhatsAppButton from '@/components/WhatsAppButton'
 import { Product } from '@/store/cartStore'
 
 
@@ -20,16 +21,24 @@ export default async function Home() {
   }
 
   // We can still fetch these if needed, but we will hardcode the GermanGearsIndia Membership details as requested
-  const accessories = products?.filter((p: Product) => p.type === 'accessory') || []
+  const accessories = products?.filter((p: Product) => 
+    p.type === 'accessory' && 
+    !p.name.includes('Carbon Fiber Mirror') && 
+    !p.name.includes('Alloy Rims')
+  ) || []
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
       {/* Hero Section */}
       <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden bg-black">
-        {/* Background Car Image */}
-        <div 
-          className="absolute inset-0 z-0 bg-cover bg-[center_top] sm:bg-center bg-no-repeat opacity-60"
-          style={{ backgroundImage: 'url(/2.gif)' }}
+        {/* Background Car Video */}
+        <video 
+          src="/hero.mp4" 
+          autoPlay 
+          loop 
+          muted 
+          playsInline
+          className="absolute inset-0 z-0 w-full h-full object-cover object-[center_top] sm:object-center opacity-60 pointer-events-none"
         />
         
         {/* Gradient Overlays for blending */}
@@ -51,16 +60,20 @@ export default async function Home() {
           <div className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-6">
             <a 
               href="#germangearsindia" 
-              className="relative px-10 py-4 group text-white font-bold tracking-wider uppercase text-sm transition-all duration-300 flex items-center justify-center shadow-[0_4px_14px_0_rgba(220,38,38,0.39)] hover:shadow-[0_6px_20px_rgba(220,38,38,0.5)] rounded-full min-h-[56px]"
+              className="relative px-10 py-4 group text-white font-bold tracking-wider uppercase text-sm transition-all duration-300 flex items-center justify-center shadow-[0_4px_14px_0_rgba(0,0,0,0.5)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.7)] rounded-full min-h-[56px]"
             >
               <div className="absolute inset-0 rounded-full overflow-hidden z-0 transform-gpu [-webkit-mask-image:-webkit-radial-gradient(white,black)]">
-                <div 
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
-                  style={{ backgroundImage: 'url(/4.gif)' }}
+                <video 
+                  src="/carbon-button.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 pointer-events-none"
                 />
                 <div className="absolute inset-0 bg-black/20 pointer-events-none transition-colors duration-300" />
               </div>
-              <span className="relative z-20 drop-shadow-lg flex items-center gap-2">
+              <span className="relative z-20 drop-shadow-lg flex items-center gap-2 transition-transform duration-300 group-hover:scale-105">
                 Join GermanGearsIndia <span className="text-xl font-medium leading-none">→</span>
               </span>
             </a>
@@ -116,6 +129,21 @@ export default async function Home() {
         </div>
       </section>
       
+      {/* Supported By Section */}
+      <section className="py-8 border-t border-white/5 bg-black relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[200px] bg-red-600/5 blur-[120px] pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-6">
+            <h2 className="text-lg md:text-xl font-black text-zinc-500 uppercase tracking-[0.2em]">Supported By</h2>
+          </div>
+          <div className="flex flex-row items-center justify-center gap-6 md:gap-16">
+            <img src="/sup-1.jpg" alt="Partner 1" className="h-10 sm:h-12 md:h-16 w-auto object-contain mix-blend-screen rounded-lg" />
+            <img src="/sup-2.jpg" alt="Partner 2" className="h-10 sm:h-12 md:h-16 w-auto object-contain mix-blend-screen rounded-lg" />
+          </div>
+        </div>
+      </section>
+
+      <WhatsAppButton />
     </div>
   )
 }
