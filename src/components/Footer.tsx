@@ -8,9 +8,9 @@ export default function Footer() {
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-red-600/5 blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-12">
           {/* Brand */}
-          <div className="col-span-1 md:col-span-1">
+          <div className="col-span-2 md:col-span-1 order-1">
             <Link href="/" className="flex items-center gap-2 group mb-6">
               <img src="/logo1.png" alt="GermanGearsIndia Logo" className="h-12 w-auto mix-blend-screen transform group-hover:-rotate-3 transition-transform" />
             </Link>
@@ -22,9 +22,6 @@ export default function Footer() {
               <a href="https://www.instagram.com/germangearsindia/" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-zinc-400 hover:bg-[#dc2626] hover:text-white transition-all duration-300">
                 <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
               </a>
-              <a href="https://twitter.com" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-zinc-400 hover:bg-[#dc2626] hover:text-white transition-all duration-300">
-                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
-              </a>
               <a href="https://www.facebook.com/people/Germangearsindia/61575488379629/" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-zinc-400 hover:bg-[#dc2626] hover:text-white transition-all duration-300">
                 <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
               </a>
@@ -34,35 +31,13 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="text-white font-semibold mb-6 uppercase tracking-wider text-sm">Quick Links</h4>
-            <ul className="space-y-4">
-              <li><Link href="/" className="text-zinc-400 hover:text-white transition-colors text-sm">Home</Link></li>
-              <li><Link href="/#accessories" className="text-zinc-400 hover:text-white transition-colors text-sm">Shop Accessories</Link></li>
-              <li><Link href="/contact" className="text-zinc-400 hover:text-white transition-colors text-sm">Contact Us</Link></li>
-              <li><Link href="/login" className="text-zinc-400 hover:text-white transition-colors text-sm">Member Login</Link></li>
-            </ul>
-          </div>
-
-          {/* Legal */}
-          <div>
-            <h4 className="text-white font-semibold mb-6 uppercase tracking-wider text-sm">Legal</h4>
-            <ul className="space-y-4">
-              <li><Link href="#" className="text-zinc-400 hover:text-white transition-colors text-sm">Privacy Policy</Link></li>
-              <li><Link href="#" className="text-zinc-400 hover:text-white transition-colors text-sm">Terms of Service</Link></li>
-              <li><Link href="#" className="text-zinc-400 hover:text-white transition-colors text-sm">Shipping Policy</Link></li>
-              <li><Link href="#" className="text-zinc-400 hover:text-white transition-colors text-sm">Return Policy</Link></li>
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
+          {/* Contact (Get In Touch) */}
+          <div className="col-span-2 md:col-span-1 order-2 md:order-4">
             <h4 className="text-white font-semibold mb-6 uppercase tracking-wider text-sm">Get in Touch</h4>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-[#dc2626] shrink-0 mt-0.5" />
-                <span className="text-zinc-400 text-sm">123 Motorsports Way, Trackside, Auto City 90210</span>
+                <span className="text-zinc-400 text-sm">Mumbai, Maharashtra, India</span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-[#dc2626] shrink-0" />
@@ -74,16 +49,35 @@ export default function Footer() {
               </li>
             </ul>
           </div>
+
+          {/* Quick Links */}
+          <div className="col-span-1 order-3 md:order-2">
+            <h4 className="text-white font-semibold mb-6 uppercase tracking-wider text-sm">Quick Links</h4>
+            <ul className="space-y-4">
+              <li><Link href="/" className="text-zinc-400 hover:text-white transition-colors text-sm">Home</Link></li>
+              <li><Link href="/#accessories" className="text-zinc-400 hover:text-white transition-colors text-sm">Shop Accessories</Link></li>
+              <li><Link href="/contact" className="text-zinc-400 hover:text-white transition-colors text-sm">Contact Us</Link></li>
+              <li><Link href="/login" className="text-zinc-400 hover:text-white transition-colors text-sm">Member Login</Link></li>
+            </ul>
+          </div>
+
+          {/* Legal */}
+          <div className="col-span-1 order-4 md:order-3">
+            <h4 className="text-white font-semibold mb-6 uppercase tracking-wider text-sm">Legal</h4>
+            <ul className="space-y-4">
+              <li><Link href="/legal#privacy" className="text-zinc-400 hover:text-white transition-colors text-sm">Privacy Policy</Link></li>
+              <li><Link href="/legal#terms" className="text-zinc-400 hover:text-white transition-colors text-sm">Terms of Service</Link></li>
+              <li><Link href="/legal#shipping" className="text-zinc-400 hover:text-white transition-colors text-sm">Shipping Policy</Link></li>
+              <li><Link href="/legal#returns" className="text-zinc-400 hover:text-white transition-colors text-sm">Return Policy</Link></li>
+            </ul>
+          </div>
+
         </div>
 
-        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="pt-8 border-t border-white/10 flex justify-center md:justify-start items-center">
           <p className="text-zinc-500 text-sm text-center md:text-left">
             © {new Date().getFullYear()} GermanGearsIndia Automotive. All rights reserved.
           </p>
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            <span className="text-zinc-500 text-sm">Systems Online</span>
-          </div>
         </div>
       </div>
     </footer>

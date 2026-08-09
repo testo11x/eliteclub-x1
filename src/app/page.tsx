@@ -29,7 +29,7 @@ export default async function Home() {
         {/* Background Car Image */}
         <div 
           className="absolute inset-0 z-0 bg-cover bg-[center_top] sm:bg-center bg-no-repeat opacity-60"
-          style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=100&w=1920)' }}
+          style={{ backgroundImage: 'url(/2.gif)' }}
         />
         
         {/* Gradient Overlays for blending */}
@@ -37,23 +37,32 @@ export default async function Home() {
         <div className="absolute inset-0 z-10 bg-gradient-to-b from-black via-transparent to-transparent opacity-80" />
 
         {/* Layered Typography */}
-        <div className="relative z-20 text-center w-full max-w-7xl mx-auto px-4 mt-20">
+        <div className="relative z-20 text-center w-full max-w-7xl mx-auto px-4 mt-20 flex flex-col items-center">
           <h1 
-            className="text-6xl md:text-8xl lg:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 tracking-tighter uppercase select-none"
+            className="text-7xl sm:text-8xl md:text-9xl lg:text-[10rem] font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 tracking-tighter uppercase select-none leading-[0.85]"
             style={{ mixBlendMode: 'overlay' }}
           >
-            Explore Beyond
+            Explore<br/>Beyond
           </h1>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white tracking-widest uppercase mt-[-10px] md:mt-[-20px] drop-shadow-2xl">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-white tracking-widest uppercase mt-4 md:mt-2 drop-shadow-2xl">
             The Ordinary
           </h1>
           
           <div className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-6">
             <a 
               href="#germangearsindia" 
-              className="px-10 py-4 bg-[#dc2626] hover:bg-[#b91c1c] text-white font-semibold tracking-wider uppercase text-sm transition-all duration-300 flex items-center gap-2 shadow-[0_4px_14px_0_rgba(220,38,38,0.39)] hover:shadow-[0_6px_20px_rgba(220,38,38,0.23)] rounded-full"
+              className="relative px-10 py-4 group text-white font-bold tracking-wider uppercase text-sm transition-all duration-300 flex items-center justify-center shadow-[0_4px_14px_0_rgba(220,38,38,0.39)] hover:shadow-[0_6px_20px_rgba(220,38,38,0.5)] rounded-full min-h-[56px]"
             >
-              Join GermanGearsIndia <span className="text-xl leading-none">›</span>
+              <div className="absolute inset-0 rounded-full overflow-hidden z-0 transform-gpu [-webkit-mask-image:-webkit-radial-gradient(white,black)]">
+                <div 
+                  className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                  style={{ backgroundImage: 'url(/4.gif)' }}
+                />
+                <div className="absolute inset-0 bg-black/20 pointer-events-none transition-colors duration-300" />
+              </div>
+              <span className="relative z-20 drop-shadow-lg flex items-center gap-2">
+                Join GermanGearsIndia <span className="text-xl font-medium leading-none">→</span>
+              </span>
             </a>
             <a 
               href="#accessories" 
