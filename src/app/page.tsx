@@ -66,7 +66,7 @@ export default async function Home() {
       </section>
 
       {/* GermanGearsIndia Memberships (Dynamic Premium Tiers) */}
-      <section id="germangearsindia" className="relative py-32 overflow-hidden bg-black">
+      <section id="germangearsindia" className="relative py-16 overflow-hidden bg-black">
         {/* Full-width Cinematic Background Video */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-black/70 backdrop-blur-[2px] z-10" />
@@ -86,7 +86,7 @@ export default async function Home() {
       </section>
 
       {/* Accessories Section */}
-      <section id="accessories" className="py-24 border-t border-white/5 bg-[#0a0a0a]">
+      <section id="accessories" className="py-16 border-t border-white/5 bg-[#0a0a0a]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-black text-white mb-4 uppercase tracking-tight">Premium <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800">Accessories</span></h2>

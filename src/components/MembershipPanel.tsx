@@ -102,6 +102,20 @@ export default function MembershipPanel({ memberships }: { memberships: Product[
               <span className="text-sm text-zinc-300 font-medium">GermanGears WhatsApp Group</span>
             </div>
 
+            <div className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/5">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-red-500/20 text-red-500">
+                <Star className="w-5 h-5" />
+              </div>
+              <span className="text-sm text-zinc-300 font-medium">Features, Reposts & Collabs</span>
+            </div>
+
+            <div className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/5">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-red-500/20 text-red-500">
+                <MapPin className="w-5 h-5" />
+              </div>
+              <span className="text-sm text-zinc-300 font-medium">Exclusive Car Meets & Drives</span>
+            </div>
+
             {/* Base Tier Only */}
             {selectedPlan.price < 9000 && (
               <div className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/5">
@@ -119,7 +133,7 @@ export default function MembershipPanel({ memberships }: { memberships: Product[
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-red-500 text-white">
                     <MapPin className="w-5 h-5" />
                   </div>
-                  <span className="text-sm text-white font-medium">Exclusive Car Meets & VIP Drives</span>
+                  <span className="text-sm text-white font-medium">VIP Track Days & Premium Drives</span>
                 </div>
 
                 <div className="flex items-center gap-4 bg-[#dc2626]/20 p-4 rounded-2xl border border-[#dc2626]/30">
@@ -133,7 +147,7 @@ export default function MembershipPanel({ memberships }: { memberships: Product[
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-red-500 text-white">
                     <Star className="w-5 h-5" />
                   </div>
-                  <span className="text-sm text-white font-medium">Priority Features, Reposts & Collabs</span>
+                  <span className="text-sm text-white font-medium">Priority Features & Front Page Reposts</span>
                 </div>
               </>
             )}
