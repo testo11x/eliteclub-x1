@@ -14,6 +14,7 @@ export default async function Home() {
   const { data: products, error } = await supabase
     .from('products')
     .select('*')
+    .eq('is_active', true)
     .order('price', { ascending: true })
 
   if (error) {
