@@ -30,20 +30,33 @@ export default function ProductCard({ product }: { product: Product }) {
       transition={{ duration: 0.5 }}
       className="group relative bg-[#111111] rounded-[24px] overflow-hidden hover:shadow-2xl hover:shadow-red-900/20 transition-all duration-500 border border-white/5 flex flex-col"
     >
-      <div className="relative aspect-square overflow-hidden bg-black/50">
+      <div className="relative aspect-square overflow-hidden bg-black/50 group/gallery">
         {/* Subtle red glow behind image */}
-        <div className="absolute inset-0 bg-gradient-to-br from-red-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0" />
+        <div className="absolute inset-0 bg-gradient-to-br from-red-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 pointer-events-none" />
         
         {product.image_url ? (
-          <img 
-            src={product.image_url} 
-            alt={product.name}
-            className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-700 ease-out relative z-10"
-          />
+          <div className="w-full h-full flex overflow-x-auto snap-x snap-mandatory scrollbar-none relative z-10">
+            <img src={product.image_url} alt={product.name} className="flex-none w-full h-full object-cover snap-center transform group-hover:scale-105 transition-transform duration-700 ease-out" />
+            {product.image_url_2 && (
+              <img src={product.image_url_2} alt={`${product.name} view 2`} className="flex-none w-full h-full object-cover snap-center" />
+            )}
+            {product.image_url_3 && (
+              <img src={product.image_url_3} alt={`${product.name} view 3`} className="flex-none w-full h-full object-cover snap-center" />
+            )}
+          </div>
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center text-zinc-600 bg-gradient-to-br from-zinc-900 to-black relative z-10">
             <span className="text-4xl font-bold italic opacity-20">GERMANGEARS</span>
             <span className="text-sm tracking-widest mt-2 opacity-50">CLUB</span>
+          </div>
+        )}
+        
+        {/* Image indicators if multiple images */}
+        {(product.image_url_2 || product.image_url_3) && (
+          <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 z-20 opacity-0 group-hover/gallery:opacity-100 transition-opacity">
+            <div className="w-1.5 h-1.5 rounded-full bg-white/80"></div>
+            {product.image_url_2 && <div className="w-1.5 h-1.5 rounded-full bg-white/40"></div>}
+            {product.image_url_3 && <div className="w-1.5 h-1.5 rounded-full bg-white/40"></div>}
           </div>
         )}
         

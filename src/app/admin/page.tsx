@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { createClient } from '@/utils/supabase/client'
-import { Loader2, Trash2, Plus, Image as ImageIcon, MessageSquare, Users, Package, Power } from 'lucide-react'
+import { Loader2, Trash2, Plus, Image as ImageIcon, MessageSquare, Users, Package, Power, Edit2, X } from 'lucide-react'
 
 export default function AdminDashboard() {
   const supabase = createClient()
@@ -16,13 +16,17 @@ export default function AdminDashboard() {
   
   // Form State
   const [isUploading, setIsUploading] = useState(false)
+  const [editingProductId, setEditingProductId] = useState<string | null>(null)
   const [formData, setFormData] = useState({
     name: '',
     description: '',
     price: '',
     type: 'accessory'
   })
-  const [imageFile, setImageFile] = useState<File | null>(null)
+  
+  // Image States
+  const [imageFiles, setImageFiles] = useState<(File | null)[]>([null, null, null])
+  const [existingImages, setExistingImages] = useState<(string | null)[]>([null, null, null])
 
   useEffect(() => {
     fetchData()
@@ -44,36 +48,74 @@ export default function AdminDashboard() {
   }
 
   // --- Product Handlers ---
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) setImageFile(e.target.files[0])
+  const handleFileChange = (index: parseInt, e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const newFiles = [...imageFiles]
+      newFiles[index] = e.target.files[0]
+      setImageFiles(newFiles)
+    }
   }
 
-  const handleAddProduct = async (e: React.FormEvent) => {
+  const clearForm = () => {
+    setEditingProductId(null)
+    setFormData({ name: '', description: '', price: '', type: 'accessory' })
+    setImageFiles([null, null, null])
+    setExistingImages([null, null, null])
+  }
+
+  const handleEditClick = (product: any) => {
+    setEditingProductId(product.id)
+    setFormData({
+      name: product.name,
+      description: product.description || '',
+      price: product.price.toString(),
+      type: product.type
+    })
+    setExistingImages([product.image_url, product.image_url_2, product.image_url_3])
+    setImageFiles([null, null, null])
+  }
+
+  const handleSaveProduct = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsUploading(true)
     try {
-      let imageUrl = null
-      if (imageFile) {
-        const fileExt = imageFile.name.split('.').pop()
-        const fileName = `${Math.random()}.${fileExt}`
-        const { error: uploadError } = await supabase.storage.from('product-images').upload(fileName, imageFile)
-        if (uploadError) throw uploadError
-        const { data: { publicUrl } } = supabase.storage.from('product-images').getPublicUrl(fileName)
-        imageUrl = publicUrl
+      const finalImageUrls = [...existingImages]
+
+      // Upload new files if selected
+      for (let i = 0; i < 3; i++) {
+        if (imageFiles[i]) {
+          const file = imageFiles[i]!
+          const fileExt = file.name.split('.').pop()
+          const fileName = `${Math.random()}.${fileExt}`
+          const { error: uploadError } = await supabase.storage.from('product-images').upload(fileName, file)
+          if (uploadError) throw uploadError
+          const { data: { publicUrl } } = supabase.storage.from('product-images').getPublicUrl(fileName)
+          finalImageUrls[i] = publicUrl
+        }
       }
 
-      const { error } = await supabase.from('products').insert({
+      const payload = {
         name: formData.name,
         description: formData.description,
         price: parseInt(formData.price),
         type: formData.type,
-        image_url: imageUrl,
+        image_url: finalImageUrls[0],
+        image_url_2: finalImageUrls[1],
+        image_url_3: finalImageUrls[2],
         is_active: true
-      })
-      if (error) throw error
+      }
 
-      setFormData({ name: '', description: '', price: '', type: 'accessory' })
-      setImageFile(null)
+      if (editingProductId) {
+        const { error } = await supabase.from('products').update(payload).eq('id', editingProductId)
+        if (error) throw error
+        alert('Product updated successfully!')
+      } else {
+        const { error } = await supabase.from('products').insert(payload)
+        if (error) throw error
+        alert('Product added successfully!')
+      }
+
+      clearForm()
       fetchData()
     } catch (err: any) {
       alert(`Error: ${err.message}`)
@@ -93,7 +135,6 @@ export default function AdminDashboard() {
     fetchData()
   }
 
-  // --- Message Handlers ---
   const handleDeleteMessage = async (id: string) => {
     if (!confirm('Delete this message?')) return
     await supabase.from('contact_messages').delete().eq('id', id)
@@ -128,10 +169,19 @@ export default function AdminDashboard() {
       {activeTab === 'products' && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-1 bg-white/5 border border-white/10 rounded-2xl p-6 h-fit">
-            <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-              <Plus className="w-5 h-5 text-red-500" /> Add Product
-            </h2>
-            <form onSubmit={handleAddProduct} className="space-y-4">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-xl font-bold flex items-center gap-2">
+                {editingProductId ? <Edit2 className="w-5 h-5 text-red-500" /> : <Plus className="w-5 h-5 text-red-500" />}
+                {editingProductId ? 'Edit Product' : 'Add Product'}
+              </h2>
+              {editingProductId && (
+                <button onClick={clearForm} className="text-zinc-400 hover:text-white text-sm flex items-center gap-1">
+                  <X className="w-4 h-4" /> Cancel
+                </button>
+              )}
+            </div>
+            
+            <form onSubmit={handleSaveProduct} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-zinc-400 mb-1">Product Name</label>
                 <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:border-red-500 outline-none" />
@@ -153,16 +203,34 @@ export default function AdminDashboard() {
                   </select>
                 </div>
               </div>
+              
               <div>
-                <label className="block text-sm font-medium text-zinc-400 mb-1">Image</label>
-                <div className="border-2 border-dashed border-white/10 rounded-lg p-4 text-center hover:border-red-500/50 cursor-pointer relative">
-                  <input type="file" accept="image/*" onChange={handleFileChange} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
-                  <ImageIcon className="w-8 h-8 text-zinc-500 mx-auto mb-2" />
-                  <span className="text-sm text-zinc-400">{imageFile ? imageFile.name : 'Upload image'}</span>
+                <label className="block text-sm font-medium text-zinc-400 mb-2">Images (Max 3)</label>
+                <div className="grid grid-cols-3 gap-2">
+                  {[0, 1, 2].map(index => (
+                    <div key={index} className="aspect-square border border-dashed border-white/20 rounded-lg relative overflow-hidden group/img bg-black/50 hover:border-red-500/50 transition-colors">
+                      <input type="file" accept="image/*" onChange={(e) => handleFileChange(index, e)} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20" />
+                      
+                      {imageFiles[index] ? (
+                        <div className="absolute inset-0 flex items-center justify-center p-2 text-center text-xs text-green-400 font-bold bg-green-500/10 z-10">
+                          Ready to upload
+                        </div>
+                      ) : existingImages[index] ? (
+                        <img src={existingImages[index]!} className="w-full h-full object-cover opacity-60 group-hover/img:opacity-30 transition-opacity" />
+                      ) : (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-zinc-600">
+                          <Plus className="w-4 h-4 mb-1" />
+                          <span className="text-[10px]">Img {index + 1}</span>
+                        </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
+                <p className="text-[11px] text-zinc-500 mt-2">Click a square to select a new image. It will replace the existing one.</p>
               </div>
-              <button type="submit" disabled={isUploading} className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-lg flex items-center justify-center disabled:opacity-50">
-                {isUploading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Save Product'}
+
+              <button type="submit" disabled={isUploading} className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-lg flex items-center justify-center mt-6 disabled:opacity-50">
+                {isUploading ? <Loader2 className="w-5 h-5 animate-spin" /> : (editingProductId ? 'Update Product' : 'Create Product')}
               </button>
             </form>
           </div>
@@ -195,8 +263,9 @@ export default function AdminDashboard() {
                       </button>
                     </td>
                     <td className="px-6 py-4 font-mono font-bold">₹{p.price}</td>
-                    <td className="px-6 py-4 text-right">
-                      <button onClick={() => handleDeleteProduct(p.id)} className="p-2 text-zinc-500 hover:text-red-500 rounded-lg hover:bg-red-500/10"><Trash2 className="w-5 h-5" /></button>
+                    <td className="px-6 py-4 text-right flex items-center justify-end gap-2">
+                      <button onClick={() => handleEditClick(p)} className="p-2 text-zinc-500 hover:text-white rounded-lg hover:bg-white/10"><Edit2 className="w-4 h-4" /></button>
+                      <button onClick={() => handleDeleteProduct(p.id)} className="p-2 text-zinc-500 hover:text-red-500 rounded-lg hover:bg-red-500/10"><Trash2 className="w-4 h-4" /></button>
                     </td>
                   </tr>
                 ))}
@@ -229,7 +298,7 @@ export default function AdminDashboard() {
                   </td>
                   <td className="px-6 py-4">
                     <div className="font-bold text-zinc-300 mb-1">{m.subject}</div>
-                    <div className="text-zinc-500 text-sm">{m.message}</div>
+                    <div className="text-zinc-500 text-sm max-w-md">{m.message}</div>
                   </td>
                   <td className="px-6 py-4 text-right">
                     <button onClick={() => handleDeleteMessage(m.id)} className="p-2 text-zinc-500 hover:text-red-500 rounded-lg hover:bg-red-500/10"><Trash2 className="w-5 h-5" /></button>
