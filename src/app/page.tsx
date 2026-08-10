@@ -173,6 +173,7 @@ export default async function Home() {
             <img src="/sup-4.jpg" alt="Partner 4" className="h-10 sm:h-12 md:h-16 w-auto object-contain mix-blend-screen rounded-lg" />
             <img src="/sup-5.jpg" alt="Partner 5" className="h-10 sm:h-12 md:h-16 w-auto object-contain mix-blend-screen rounded-lg" />
             <img src="/sup-6.jpg" alt="Partner 6" className="h-10 sm:h-12 md:h-16 w-auto object-contain mix-blend-screen rounded-lg" />
+            <img src="/sup-7.jpg" alt="Partner 7" className="h-10 sm:h-12 md:h-16 w-auto object-contain mix-blend-screen rounded-lg" />
           </div>
         </div>
       </section>

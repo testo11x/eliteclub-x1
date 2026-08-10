@@ -93,7 +93,23 @@ export default function AdminDashboard() {
         .from('orders')
         .select('*, profiles(name, email), order_items(*, products(name, type))')
         .order('created_at', { ascending: false })
-      if (data) setOrders(data)
+        
+      const res = await adminGetCustomers()
+      const usersMap = new Map()
+      if (res.success) {
+        res.data.forEach((u: any) => usersMap.set(u.id, u.email))
+      }
+
+      if (data) {
+        const enrichedOrders = data.map((order: any) => ({
+          ...order,
+          profiles: {
+            ...order.profiles,
+            email: usersMap.get(order.user_id) || order.profiles?.email
+          }
+        }))
+        setOrders(enrichedOrders)
+      }
     } else if (activeTab === 'products') {
       const { data } = await supabase.from('products').select('*').order('created_at', { ascending: false })
       if (data) setProducts(data)
@@ -680,7 +696,10 @@ export default function AdminDashboard() {
                   <tr key={c.id} className="hover:bg-white/5">
                     <td className="px-6 py-4 text-zinc-400 whitespace-nowrap">{new Date(c.created_at).toLocaleDateString()}</td>
                     <td className="px-6 py-4 font-bold text-white whitespace-nowrap">{c.name || 'Anonymous'}</td>
-                    <td className="px-6 py-4 text-zinc-400">{c.email || 'N/A'}</td>
+                    <td className="px-6 py-4 text-zinc-400">
+                      {c.email || 'N/A'}
+                      {c.email === 'germangearsindia@gmail.com' && <span className="ml-2 px-1.5 py-0.5 bg-red-500/20 text-red-500 rounded text-[10px] font-bold uppercase shadow-sm">Admin</span>}
+                    </td>
                     <td className="px-6 py-4">
                       <div className="flex flex-col items-start gap-1">
                         <span className={`px-2 py-1 rounded text-xs font-bold uppercase whitespace-nowrap ${c.membership_tier !== 'none' ? 'bg-red-500/20 text-red-500' : 'bg-zinc-800 text-zinc-500'}`}>
@@ -695,20 +714,24 @@ export default function AdminDashboard() {
                       </div>
                     </td>
                     <td className="px-6 py-4 text-right flex items-center justify-end gap-2">
-                      <button 
-                        onClick={() => handleResetPassword(c.id)} 
-                        title="Reset Password"
-                        className="px-3 py-1.5 text-zinc-400 hover:text-white bg-white/5 border border-white/10 hover:bg-white/10 rounded-lg transition-all inline-flex items-center gap-2 whitespace-nowrap shadow-md text-xs font-bold uppercase tracking-wider"
-                      >
-                        <Key className="w-3.5 h-3.5 text-zinc-500" /> Reset Password
-                      </button>
-                      <button 
-                        onClick={() => handleDeleteCustomer(c.id)} 
-                        title="Delete Customer"
-                        className="p-2 text-zinc-500 hover:text-red-500 rounded-lg hover:bg-red-500/10 transition-colors"
-                      >
-                        <Trash2 className="w-5 h-5" />
-                      </button>
+                      {c.email !== 'germangearsindia@gmail.com' && (
+                        <>
+                          <button 
+                            onClick={() => handleResetPassword(c.id)} 
+                            title="Reset Password"
+                            className="px-3 py-1.5 text-zinc-400 hover:text-white bg-white/5 border border-white/10 hover:bg-white/10 rounded-lg transition-all inline-flex items-center gap-2 whitespace-nowrap shadow-md text-xs font-bold uppercase tracking-wider"
+                          >
+                            <Key className="w-3.5 h-3.5 text-zinc-500" /> Reset Password
+                          </button>
+                          <button 
+                            onClick={() => handleDeleteCustomer(c.id)} 
+                            title="Delete Customer"
+                            className="p-2 text-zinc-500 hover:text-red-500 rounded-lg hover:bg-red-500/10 transition-colors"
+                          >
+                            <Trash2 className="w-5 h-5" />
+                          </button>
+                        </>
+                      )}
                     </td>
                   </tr>
                 ))}

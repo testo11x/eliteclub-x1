@@ -19,6 +19,9 @@ export const metadata: Metadata = {
     siteName: "GermanGearsIndia",
     locale: "en_IN",
     type: "website",
+  },
+  icons: {
+    icon: "/logo-2.jpg",
   }
 };
 

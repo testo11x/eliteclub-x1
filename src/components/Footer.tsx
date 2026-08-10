@@ -12,7 +12,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="col-span-2 md:col-span-1 order-1">
             <Link href="/" className="flex flex-col items-start gap-4 group mb-6">
-              <img src="/logo1.png" alt="GermanGearsIndia Logo" className="h-20 w-auto mix-blend-screen transform group-hover:-rotate-3 transition-transform" />
+              <img src="/logo-2.jpg" alt="GermanGearsIndia Logo" className="h-12 w-auto rounded-2xl mix-blend-screen transform group-hover:-rotate-3 transition-transform" />
               <span className="text-white font-bold tracking-widest uppercase text-sm">German Gears India</span>
             </Link>
             <p className="text-sm text-zinc-400 leading-relaxed mb-6">

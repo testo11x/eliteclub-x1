@@ -45,7 +45,7 @@ export default function Navbar() {
           <div className="flex items-center gap-8">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 group">
-              <img src="/logo1.png" alt="GermanGearsIndia Logo" className="h-12 w-auto mix-blend-screen transform group-hover:scale-105 transition-transform" />
+              <img src="/logo-2.jpg" alt="GermanGearsIndia Logo" className="h-8 w-auto rounded-xl mix-blend-screen transform group-hover:scale-105 transition-transform" />
             </Link>
 
             {/* Main Navigation Links */}
