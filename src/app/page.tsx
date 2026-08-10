@@ -151,15 +151,18 @@ export default async function Home() {
       </section>
       
       {/* Supported By Section */}
-      <section className="py-8 border-t border-white/5 bg-black relative overflow-hidden">
+      <section className="py-6 border-t border-white/5 bg-black relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[200px] bg-red-600/5 blur-[120px] pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-6">
             <h2 className="text-lg md:text-xl font-black text-zinc-500 uppercase tracking-[0.2em]">Supported By</h2>
           </div>
-          <div className="flex flex-row items-center justify-center gap-6 md:gap-16">
+          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-12 lg:gap-16">
             <img src="/sup-1.jpg" alt="Partner 1" className="h-10 sm:h-12 md:h-16 w-auto object-contain mix-blend-screen rounded-lg" />
             <img src="/sup-2.jpg" alt="Partner 2" className="h-10 sm:h-12 md:h-16 w-auto object-contain mix-blend-screen rounded-lg" />
+            <img src="/sup-3.jpg" alt="Partner 3" className="h-10 sm:h-12 md:h-16 w-auto object-contain mix-blend-screen rounded-lg" />
+            <img src="/sup-4.jpg" alt="Partner 4" className="h-10 sm:h-12 md:h-16 w-auto object-contain mix-blend-screen rounded-lg" />
+            <img src="/sup-5.jpg" alt="Partner 5" className="h-10 sm:h-12 md:h-16 w-auto object-contain mix-blend-screen rounded-lg" />
           </div>
         </div>
       </section>

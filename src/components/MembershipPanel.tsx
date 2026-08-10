@@ -98,7 +98,7 @@ export default function MembershipPanel({ memberships }: { memberships: Product[
                 >
                   <div className="text-center lg:text-left mb-8">
                     <div className="inline-block px-4 py-1.5 bg-red-500/20 text-red-500 text-xs font-bold uppercase tracking-widest rounded-full mb-6">
-                      GermanGearsIndia Elite
+                      GermanGearsIndia {selectedPlan.name}
                     </div>
                     <h3 className="text-4xl font-black text-white mb-2 tracking-tight">{selectedPlan.name}</h3>
                     <div className="flex items-baseline justify-center lg:justify-start gap-2">

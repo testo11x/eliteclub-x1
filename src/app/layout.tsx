@@ -8,8 +8,18 @@ import Footer from "@/components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "GermanGearsIndia - Premium Car Accessories & Memberships",
-  description: "The ultimate club for car enthusiasts. Get exclusive accessories and memberships.",
+  title: "GermanGearsIndia - Premium Car Accessories & VIP Memberships",
+  description: "The ultimate club for German car enthusiasts in India. Get exclusive high-end accessories, carbon fiber upgrades, and VIP community memberships.",
+  keywords: ["German cars", "car accessories", "car parts India", "carbon fiber accessories", "car memberships India", "luxury car parts"],
+  authors: [{ name: "GermanGearsIndia" }],
+  openGraph: {
+    title: "GermanGearsIndia - Premium Car Accessories & Memberships",
+    description: "The ultimate club for German car enthusiasts in India. Exclusive accessories and VIP community memberships.",
+    url: "https://germangearsindia.com",
+    siteName: "GermanGearsIndia",
+    locale: "en_IN",
+    type: "website",
+  }
 };
 
 export default function RootLayout({
