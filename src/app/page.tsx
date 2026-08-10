@@ -34,7 +34,7 @@ export default async function Home() {
     p.type === 'accessory' && 
     !p.name.includes('Carbon Fiber Mirror') && 
     !p.name.includes('Alloy Rims')
-  ) || []
+  ).slice(0, 3) || []
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
@@ -87,7 +87,7 @@ export default async function Home() {
               </span>
             </a>
             <a 
-              href="#accessories" 
+              href="/shop" 
               className="relative px-10 py-4 group text-white font-bold tracking-wider uppercase text-sm transition-all duration-300 flex items-center justify-center shadow-[0_4px_14px_0_rgba(0,0,0,0.5)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.7)] rounded-full min-h-[56px]"
             >
               <div className="absolute inset-0 rounded-full overflow-hidden z-0 transform-gpu [-webkit-mask-image:-webkit-radial-gradient(white,black)]">
@@ -147,6 +147,14 @@ export default async function Home() {
                 No accessories found. Stay tuned for new arrivals.
               </div>
             )}
+          </div>
+          
+          <div className="mt-16 flex justify-center">
+            <a href="/shop" className="group relative px-8 py-4 bg-transparent text-white font-bold tracking-widest uppercase border border-white/20 hover:border-red-500 transition-colors duration-300 overflow-hidden flex items-center justify-center gap-3">
+              <div className="absolute inset-0 bg-red-600 translate-y-[100%] group-hover:translate-y-0 transition-transform duration-300 z-0"></div>
+              <span className="relative z-10">See All Accessories</span>
+              <span className="relative z-10 font-sans text-xl group-hover:translate-x-1 transition-transform">→</span>
+            </a>
           </div>
         </div>
       </section>

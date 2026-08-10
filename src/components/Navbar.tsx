@@ -53,7 +53,7 @@ export default function Navbar() {
               <Link href="/" className="text-sm font-medium text-zinc-300 hover:text-white transition-colors">
                 Home
               </Link>
-              <Link href="/#accessories" className="text-sm font-medium text-zinc-300 hover:text-white transition-colors">
+              <Link href="/shop" className="text-sm font-medium text-zinc-300 hover:text-white transition-colors">
                 Shop
               </Link>
               <Link href="/contact" className="text-sm font-medium text-zinc-300 hover:text-white transition-colors">
@@ -67,9 +67,12 @@ export default function Navbar() {
             
             {user ? (
               <div className="flex items-center gap-4">
-                <span className="text-sm text-zinc-400 hidden sm:inline-block">
-                  {user.user_metadata?.full_name || user.email}
-                </span>
+                <Link href="/account" className="flex items-center gap-2 text-sm text-zinc-300 hover:text-white transition-colors group">
+                  <User className="w-5 h-5 text-zinc-400 group-hover:text-red-500 transition-colors" />
+                  <span className="hidden sm:inline-block font-medium">
+                    {user.user_metadata?.full_name?.split(' ')[0] || 'Account'}
+                  </span>
+                </Link>
                 <form action={signOut}>
                   <button type="submit" className="p-2 text-zinc-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors">
                     <LogOut className="w-5 h-5" />

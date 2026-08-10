@@ -22,32 +22,77 @@ export default function Cart() {
 
   if (!mounted) return null
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     if (!address.street || !address.city || !address.zip || !address.phone) {
       alert("Please fill in all address fields.")
       return
     }
 
+    if (!user) {
+      alert("Please login to place an order.")
+      return
+    }
+
     setIsCheckingOut(true)
     
-    // Format cart data for WhatsApp
-    let message = "Hello! I would like to place an order:%0A%0A"
-    
-    items.forEach((item, index) => {
-      message += `${index + 1}. *${item.product.name}* (x${item.quantity}) - ₹${item.product.price * item.quantity}%0A`
-    })
-    
-    message += `%0A*Total: ₹${getCartTotal()}*%0A`
-    message += `%0A*Shipping Details:*%0AName: ${user?.user_metadata?.full_name || 'Customer'}%0AEmail: ${user?.email}%0APhone: ${address.phone}%0AAddress: ${address.street}, ${address.city} - ${address.zip}%0A`
-    message += `%0APlease process my order.`
-    
-    // Redirect to WhatsApp
-    window.location.href = `https://api.whatsapp.com/send/?phone=9182850554&text=${message}`
-    
-    setTimeout(() => {
+    try {
+      const supabase = (await import('@/utils/supabase/client')).createClient()
+      
+      // 1. Generate short ID
+      const shortId = 'ORD-' + Math.random().toString(36).substring(2, 8).toUpperCase()
+      
+      // 2. Insert Order
+      const { data: order, error: orderError } = await supabase
+        .from('orders')
+        .insert({
+          short_id: shortId,
+          user_id: user.id,
+          total_amount: getCartTotal(),
+          shipping_address: address,
+          status: 'pending'
+        })
+        .select()
+        .single()
+        
+      if (orderError) throw orderError
+
+      // 3. Insert Order Items
+      const orderItems = items.map(item => ({
+        order_id: order.id,
+        product_id: item.product.id,
+        quantity: item.quantity,
+        price_at_time: item.product.price
+      }))
+      
+      const { error: itemsError } = await supabase
+        .from('order_items')
+        .insert(orderItems)
+        
+      if (itemsError) throw itemsError
+
+      // 4. Format cart data for WhatsApp
+      let message = `Hello! I would like to place an order.%0A%0A*Order ID: ${shortId}*%0A%0A`
+      
+      items.forEach((item, index) => {
+        message += `${index + 1}. *${item.product.name}* (x${item.quantity}) - ₹${item.product.price * item.quantity}%0A`
+      })
+      
+      message += `%0A*Total: ₹${getCartTotal()}*%0A`
+      message += `%0A*Shipping Details:*%0AName: ${user?.user_metadata?.full_name || 'Customer'}%0AEmail: ${user?.email}%0APhone: ${address.phone}%0AAddress: ${address.street}, ${address.city} - ${address.zip}%0A`
+      message += `%0APlease process my order.`
+      
+      // Redirect to WhatsApp
+      window.location.href = `https://api.whatsapp.com/send/?phone=9182850554&text=${message}`
+      
+      setTimeout(() => {
+        setIsCheckingOut(false)
+        closeCart()
+      }, 1000)
+    } catch (err: any) {
+      console.error(err)
+      alert("Error placing order: " + err.message)
       setIsCheckingOut(false)
-      closeCart()
-    }, 1000)
+    }
   }
 
   const proceedToAddress = () => {

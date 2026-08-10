@@ -7,9 +7,12 @@ export interface Product {
   description: string
   price: number
   type: 'accessory' | 'membership'
-  image_url: string | null
+  category?: string
+  image_url?: string
   image_url_2?: string
   image_url_3?: string
+  video_url?: string
+  is_active?: boolean
 }
 
 export interface CartItem {

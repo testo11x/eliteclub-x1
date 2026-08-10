@@ -1,14 +1,18 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Plus, Check, ShoppingCart } from 'lucide-react'
+import { Plus, Check, ShoppingCart, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useCartStore, Product } from '@/store/cartStore'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 export default function ProductCard({ product }: { product: Product }) {
   const { addItem, items } = useCartStore()
   const [isAdded, setIsAdded] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const router = useRouter()
 
   useEffect(() => {
     setMounted(true)
@@ -22,6 +26,18 @@ export default function ProductCard({ product }: { product: Product }) {
     setTimeout(() => setIsAdded(false), 2000)
   }
 
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollRef.current) {
+      const scrollAmount = scrollRef.current.clientWidth
+      scrollRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      })
+    }
+  }
+
+  const mediaCount = (product.video_url ? 1 : 0) + (product.image_url ? 1 : 0) + (product.image_url_2 ? 1 : 0) + (product.image_url_3 ? 1 : 0)
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -30,13 +46,28 @@ export default function ProductCard({ product }: { product: Product }) {
       transition={{ duration: 0.5 }}
       className="group relative bg-[#111111] rounded-[24px] overflow-hidden hover:shadow-2xl hover:shadow-red-900/20 transition-all duration-500 border border-white/5 flex flex-col"
     >
-      <div className="relative aspect-square overflow-hidden bg-black/50 group/gallery">
+      <div 
+        onClick={() => router.push(`/product/${product.id}`)}
+        className="relative aspect-square overflow-hidden bg-black/50 group/gallery cursor-pointer"
+      >
         {/* Subtle red glow behind image */}
         <div className="absolute inset-0 bg-gradient-to-br from-red-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 pointer-events-none" />
         
-        {product.image_url ? (
-          <div className="w-full h-full flex overflow-x-auto snap-x snap-mandatory scrollbar-none relative z-10">
-            <img src={product.image_url} alt={product.name} className="flex-none w-full h-full object-cover snap-center transform group-hover:scale-105 transition-transform duration-700 ease-out" />
+        {(product.video_url || product.image_url) ? (
+          <div ref={scrollRef} className="w-full h-full flex overflow-x-auto snap-x snap-mandatory scrollbar-none relative z-10">
+            {product.video_url && (
+              <video 
+                src={product.video_url} 
+                autoPlay 
+                muted 
+                loop 
+                playsInline
+                className="flex-none w-full h-full object-cover snap-center"
+              />
+            )}
+            {product.image_url && (
+              <img src={product.image_url} alt={product.name} className="flex-none w-full h-full object-cover snap-center transform group-hover:scale-105 transition-transform duration-700 ease-out" />
+            )}
             {product.image_url_2 && (
               <img src={product.image_url_2} alt={`${product.name} view 2`} className="flex-none w-full h-full object-cover snap-center" />
             )}
@@ -51,13 +82,30 @@ export default function ProductCard({ product }: { product: Product }) {
           </div>
         )}
         
-        {/* Image indicators if multiple images */}
-        {(product.image_url_2 || product.image_url_3) && (
-          <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 z-20 opacity-0 group-hover/gallery:opacity-100 transition-opacity">
-            <div className="w-1.5 h-1.5 rounded-full bg-white/80"></div>
-            {product.image_url_2 && <div className="w-1.5 h-1.5 rounded-full bg-white/40"></div>}
-            {product.image_url_3 && <div className="w-1.5 h-1.5 rounded-full bg-white/40"></div>}
-          </div>
+        {/* Indicators if multiple media items */}
+        {((product.video_url ? 1 : 0) + (product.image_url ? 1 : 0) + (product.image_url_2 ? 1 : 0) + (product.image_url_3 ? 1 : 0) > 1) && (
+          <>
+            <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 z-20 transition-opacity">
+              {product.video_url && <div className="w-1.5 h-1.5 rounded-full bg-white/80"></div>}
+              {product.image_url && <div className="w-1.5 h-1.5 rounded-full bg-white/40"></div>}
+              {product.image_url_2 && <div className="w-1.5 h-1.5 rounded-full bg-white/40"></div>}
+              {product.image_url_3 && <div className="w-1.5 h-1.5 rounded-full bg-white/40"></div>}
+            </div>
+            
+            {/* Navigation Arrows */}
+            <button 
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); scroll('left'); }}
+              className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full bg-black/40 hover:bg-red-600/80 text-white transition-all z-20 backdrop-blur-sm"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button 
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); scroll('right'); }}
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full bg-black/40 hover:bg-red-600/80 text-white transition-all z-20 backdrop-blur-sm"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </>
         )}
         
         {product.type === 'membership' && (
@@ -68,9 +116,11 @@ export default function ProductCard({ product }: { product: Product }) {
       </div>
 
       <div className="p-6 flex flex-col flex-grow relative z-10">
-        <h3 className="text-lg font-bold text-white group-hover:text-red-400 transition-colors line-clamp-1 mb-2">
-          {product.name}
-        </h3>
+        <Link href={`/product/${product.id}`} className="block">
+          <h3 className="text-lg font-bold text-white group-hover:text-red-400 transition-colors line-clamp-1 mb-2 hover:underline">
+            {product.name}
+          </h3>
+        </Link>
         <p className="text-sm text-zinc-400 line-clamp-2 min-h-[40px] mb-6">
           {product.description}
         </p>
