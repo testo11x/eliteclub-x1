@@ -20,6 +20,14 @@ export default async function Home() {
     console.error('Error fetching products:', error)
   }
 
+  if (products) {
+    products.forEach(p => {
+      if (p.name.includes('Elite++')) {
+        p.name = p.name.replace('Elite++', 'Elite+')
+      }
+    })
+  }
+
   // We can still fetch these if needed, but we will hardcode the GermanGearsIndia Membership details as requested
   const accessories = products?.filter((p: Product) => 
     p.type === 'accessory' && 
@@ -79,9 +87,22 @@ export default async function Home() {
             </a>
             <a 
               href="#accessories" 
-              className="px-10 py-4 bg-transparent border border-white/20 hover:border-white text-white font-semibold tracking-wider uppercase text-sm transition-all duration-300 rounded-full"
+              className="relative px-10 py-4 group text-white font-bold tracking-wider uppercase text-sm transition-all duration-300 flex items-center justify-center shadow-[0_4px_14px_0_rgba(0,0,0,0.5)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.7)] rounded-full min-h-[56px]"
             >
-              Shop Accessories
+              <div className="absolute inset-0 rounded-full overflow-hidden z-0 transform-gpu [-webkit-mask-image:-webkit-radial-gradient(white,black)]">
+                <video 
+                  src="/carbon-button.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 pointer-events-none"
+                />
+                <div className="absolute inset-0 bg-black/20 pointer-events-none transition-colors duration-300" />
+              </div>
+              <span className="relative z-20 drop-shadow-lg flex items-center gap-2 transition-transform duration-300 group-hover:scale-105">
+                Shop Accessories <span className="text-xl font-medium leading-none">→</span>
+              </span>
             </a>
           </div>
         </div>

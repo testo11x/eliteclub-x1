@@ -38,15 +38,15 @@ export default function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-[#dc2626] shrink-0 mt-0.5" />
-                <span className="text-zinc-400 text-sm">Mumbai, Maharashtra, India</span>
+                <span className="text-zinc-400 text-sm">India</span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-[#dc2626] shrink-0" />
-                <span className="text-zinc-400 text-sm">+91 8019591100</span>
+                <span className="text-zinc-400 text-sm">+91 9182850554</span>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-[#dc2626] shrink-0" />
-                <span className="text-zinc-400 text-sm">support@germangearsindia.com</span>
+                <span className="text-zinc-400 text-sm">germangearsindia@gmail.com</span>
               </li>
             </ul>
           </div>

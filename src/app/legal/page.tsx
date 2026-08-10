@@ -45,7 +45,7 @@ export default function LegalPage() {
               </p>
             </div>
             <div className="inline-block px-4 py-2 bg-red-500/20 text-red-500 rounded-lg font-mono font-bold tracking-widest mt-2">
-              Call Support: +91 8019591100
+              Call Support: +91 9182850554
             </div>
           </section>
         </div>

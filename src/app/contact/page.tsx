@@ -36,7 +36,7 @@ export default function ContactPage() {
               </div>
               <h3 className="text-xl font-bold text-white mb-2">Visit Us</h3>
               <p className="text-zinc-400">
-                Mumbai, Maharashtra, India
+                India
               </p>
             </div>
 
@@ -45,7 +45,7 @@ export default function ContactPage() {
                 <Phone className="w-6 h-6 text-[#dc2626]" />
               </div>
               <h3 className="text-xl font-bold text-white mb-2">Call Us</h3>
-              <p className="text-zinc-400 mb-1">+91 8019591100</p>
+              <p className="text-zinc-400 mb-1">+91 9182850554</p>
               <p className="text-sm text-zinc-500">Mon-Fri from 9am to 6pm</p>
             </div>
 
@@ -54,7 +54,7 @@ export default function ContactPage() {
                 <Mail className="w-6 h-6 text-[#dc2626]" />
               </div>
               <h3 className="text-xl font-bold text-white mb-2">Email Us</h3>
-              <p className="text-zinc-400 mb-1">support@germangearsindia.com</p>
+              <p className="text-zinc-400 mb-1">germangearsindia@gmail.com</p>
               <p className="text-sm text-zinc-500">We typically reply within 24 hours</p>
             </div>
           </div>

@@ -42,7 +42,7 @@ export default function Cart() {
     message += `%0APlease process my order.`
     
     // Redirect to WhatsApp
-    window.location.href = `https://wa.me/918019591100?text=${message}`
+    window.location.href = `https://api.whatsapp.com/send/?phone=9182850554&text=${message}`
     
     setTimeout(() => {
       setIsCheckingOut(false)

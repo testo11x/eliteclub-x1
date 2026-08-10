@@ -19,9 +19,9 @@ export default function WhatsAppButton() {
     return () => clearInterval(interval)
   }, [])
 
-  const whatsappNumber = "+919182850544"
+  const whatsappNumber = "9182850554"
   const message = encodeURIComponent("Hello, I'm reaching out from GermanGearsIndia website! I'd like to know more.")
-  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`
+  const whatsappUrl = `https://api.whatsapp.com/send/?phone=${whatsappNumber}&text=${message}`
 
   return (
     <a
