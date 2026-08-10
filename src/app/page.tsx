@@ -122,7 +122,7 @@ export default async function Home() {
             playsInline
             className="w-full h-full object-cover opacity-60"
           >
-            <source src="https://cdn.coverr.co/videos/coverr-driving-a-porsche-in-the-mountains-2646/1080p.mp4" type="video/mp4" />
+            <source src="/hero.mp4" type="video/mp4" />
           </video>
         </div>
 
@@ -172,6 +172,7 @@ export default async function Home() {
             <img src="/sup-3.jpg" alt="Partner 3" className="h-10 sm:h-12 md:h-16 w-auto object-contain mix-blend-screen rounded-lg" />
             <img src="/sup-4.jpg" alt="Partner 4" className="h-10 sm:h-12 md:h-16 w-auto object-contain mix-blend-screen rounded-lg" />
             <img src="/sup-5.jpg" alt="Partner 5" className="h-10 sm:h-12 md:h-16 w-auto object-contain mix-blend-screen rounded-lg" />
+            <img src="/sup-6.jpg" alt="Partner 6" className="h-10 sm:h-12 md:h-16 w-auto object-contain mix-blend-screen rounded-lg" />
           </div>
         </div>
       </section>

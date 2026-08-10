@@ -228,20 +228,21 @@ export default function MembershipPanel({ memberships }: { memberships: Product[
                     style={{ transform: `translateX(-${activeVideo * 100}%)` }}
                   >
                     {[
-                      "https://jumpshare.com/embed/03AuaP8mOuKVpxL5i9r1?title=0",
-                      "https://jumpshare.com/embed/cp0nkiShcQkz2yJbAUpG?title=0"
+                      "/hero.mp4",
+                      "/hero.mp4"
                     ].map((url, i) => (
                       <div 
                         key={i} 
                         className="w-full h-full flex-none relative bg-zinc-900"
                       >
-                        <iframe 
-                          id={`js_video_iframe_${i}`}
-                          src={url} 
-                          frameBorder="0" 
-                          allowFullScreen 
-                          className="absolute top-0 left-0 w-full h-full z-10"
-                        ></iframe>
+                        <video 
+                          src={url}
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          className="absolute top-0 left-0 w-full h-full object-cover z-10"
+                        />
                         
                         {/* Dark overlay at bottom to make UI elements pop */}
                         <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-black/80 to-transparent z-20 pointer-events-none" />
