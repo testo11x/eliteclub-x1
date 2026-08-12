@@ -76,9 +76,9 @@ export default function ProductCard({ product }: { product: Product }) {
             )}
           </div>
         ) : (
-          <div className="w-full h-full flex flex-col items-center justify-center text-zinc-600 bg-gradient-to-br from-zinc-900 to-black relative z-10">
-            <span className="text-4xl font-bold italic opacity-20">GERMANGEARS</span>
-            <span className="text-sm tracking-widest mt-2 opacity-50">CLUB</span>
+          <div className="w-full h-full flex flex-col items-center justify-center text-zinc-600 bg-gradient-to-br from-zinc-900 to-black relative z-10 p-8 text-center">
+            <img src="/logo-2.jpg" alt="GermanGearsIndia" className="w-16 h-16 mb-4 rounded-xl opacity-50 grayscale" />
+            <span className="text-2xl font-bold italic opacity-30">GERMANGEARS</span>
           </div>
         )}
         

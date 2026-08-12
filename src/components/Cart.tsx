@@ -144,9 +144,19 @@ export default function Cart() {
                 ) : (
                   items.map((item) => (
                     <div key={item.product.id} className="flex gap-4 bg-[#1a1a1a] p-4 rounded-2xl shadow-lg border border-white/5">
-                      {item.product.image_url ? (
+                      {item.product.image_url || item.product.type === 'membership' ? (
                         <div className="w-20 h-20 bg-black/40 rounded-xl overflow-hidden">
-                          <img src={item.product.image_url} alt={item.product.name} className="w-full h-full object-cover" />
+                          <img 
+                            src={
+                              item.product.image_url 
+                                ? item.product.image_url 
+                                : item.product.name.includes('Elite+') || item.product.name.includes('Elite++')
+                                  ? '/eiite+.jpg' 
+                                  : '/elite.jpg'
+                            } 
+                            alt={item.product.name} 
+                            className="w-full h-full object-cover" 
+                          />
                         </div>
                       ) : (
                         <div className="w-20 h-20 bg-zinc-900 rounded-xl flex items-center justify-center text-zinc-600">

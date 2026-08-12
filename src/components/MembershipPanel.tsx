@@ -148,7 +148,7 @@ export default function MembershipPanel({ memberships }: { memberships: Product[
                     </div>
 
                     {/* Base Tier Only */}
-                    {selectedPlan.price < 9000 && (
+                    {selectedPlan.price <= 500 && (
                       <motion.div 
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
@@ -161,8 +161,8 @@ export default function MembershipPanel({ memberships }: { memberships: Product[
                       </motion.div>
                     )}
 
-                    {/* Elite Tier Exclusive Features */}
-                    {selectedPlan.price >= 9000 && (
+                    {/* Elite Plus Tier Exclusive Features */}
+                    {selectedPlan.price > 500 && (
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
@@ -170,23 +170,37 @@ export default function MembershipPanel({ memberships }: { memberships: Product[
                       >
                         <div className="flex items-center gap-4 bg-amber-500/10 p-4 rounded-2xl border border-amber-500/30">
                           <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-amber-500 text-black">
-                            <MapPin className="w-5 h-5" />
+                            <Star className="w-5 h-5" />
                           </div>
-                          <span className="text-sm text-amber-500 font-bold">VIP Track Days & Premium Drives</span>
+                          <span className="text-sm text-amber-500 font-bold">Priority Entry & Reserved Event Spots</span>
+                        </div>
+
+                        <div className="flex items-center gap-4 bg-amber-500/10 p-4 rounded-2xl border border-amber-500/30">
+                          <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-amber-500 text-black">
+                            <MessageCircle className="w-5 h-5" />
+                          </div>
+                          <span className="text-sm text-amber-500 font-bold">Elite+ Networking & Brand Collabs</span>
                         </div>
 
                         <div className="flex items-center gap-4 bg-amber-500/10 p-4 rounded-2xl border border-amber-500/30">
                           <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-amber-500 text-black">
                             <Check className="w-5 h-5" />
                           </div>
-                          <span className="text-sm text-amber-500 font-bold">Brand Collaboration Opportunities</span>
+                          <span className="text-sm text-amber-500 font-bold">Early Access to Drops & Experiences</span>
                         </div>
 
                         <div className="flex items-center gap-4 bg-amber-500/10 p-4 rounded-2xl border border-amber-500/30">
                           <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-amber-500 text-black">
                             <Star className="w-5 h-5" />
                           </div>
-                          <span className="text-sm text-amber-500 font-bold">Priority Features & Front Page Reposts</span>
+                          <span className="text-sm text-amber-500 font-bold">Priority Entry to Exclusive Car Meets - PAN India</span>
+                        </div>
+
+                        <div className="flex items-center gap-4 bg-amber-500/10 p-4 rounded-2xl border border-amber-500/30">
+                          <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-amber-500 text-black">
+                            <Users className="w-5 h-5" />
+                          </div>
+                          <span className="text-sm text-amber-500 font-bold">Member-Only Giveaways & Contests</span>
                         </div>
                       </motion.div>
                     )}
@@ -228,8 +242,10 @@ export default function MembershipPanel({ memberships }: { memberships: Product[
                     style={{ transform: `translateX(-${activeVideo * 100}%)` }}
                   >
                     {[
-                      "/hero.mp4",
-                      "/hero.mp4"
+                      "/H1.mp4",
+                      "/H2.mp4",
+                      "/H3.mp4",
+                      "/H4.mp4"
                     ].map((url, i) => (
                       <div 
                         key={i} 
@@ -254,7 +270,7 @@ export default function MembershipPanel({ memberships }: { memberships: Product[
                   <div className="absolute bottom-6 inset-x-0 flex flex-col items-center justify-end z-30 pointer-events-none">
                     {/* Floating Pagination inside the screen */}
                     <div className="flex justify-center gap-2 mb-4 bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 pointer-events-auto">
-                      {[0, 1].map((i) => (
+                      {[0, 1, 2, 3].map((i) => (
                         <button
                           key={i}
                           onClick={() => scrollToVideo(i)}
