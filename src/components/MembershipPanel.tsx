@@ -10,10 +10,34 @@ export default function MembershipPanel({ memberships }: { memberships: Product[
   const availablePlans = memberships.filter(m => m.price !== 999).sort((a, b) => a.price - b.price)
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [activeVideo, setActiveVideo] = useState(0)
+  const videoScrollRef = useRef<HTMLDivElement>(null)
 
   const scrollToVideo = (index: number) => {
-    setActiveVideo(index);
-  };
+    setActiveVideo(index)
+    if (videoScrollRef.current) {
+      const scrollAmount = videoScrollRef.current.clientWidth * index
+      videoScrollRef.current.scrollTo({
+        left: scrollAmount,
+        behavior: 'smooth'
+      })
+    }
+  }
+
+  const handleVideoScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const el = e.currentTarget
+    const index = Math.round(el.scrollLeft / el.clientWidth)
+    setActiveVideo(index)
+  }
+
+  const scrollVideo = (direction: 'left' | 'right') => {
+    if (videoScrollRef.current) {
+      const scrollAmount = videoScrollRef.current.clientWidth
+      videoScrollRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      })
+    }
+  }
 
   const selectedPlan = availablePlans[selectedIndex]
 
@@ -238,8 +262,9 @@ export default function MembershipPanel({ memberships }: { memberships: Product[
                 {/* The Clean Screen */}
                 <div className="relative rounded-3xl overflow-hidden bg-black shadow-2xl border border-white/10 aspect-[9/16] z-10 transform-gpu transition-transform duration-500 hover:scale-[1.01]">
                   <div 
-                    className="flex transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] h-full"
-                    style={{ transform: `translateX(-${activeVideo * 100}%)` }}
+                    ref={videoScrollRef}
+                    onScroll={handleVideoScroll}
+                    className="flex h-full overflow-x-auto snap-x snap-mandatory hide-scrollbar"
                   >
                     {[
                       "/H1.mp4",
@@ -249,7 +274,7 @@ export default function MembershipPanel({ memberships }: { memberships: Product[
                     ].map((url, i) => (
                       <div 
                         key={i} 
-                        className="w-full h-full flex-none relative bg-zinc-900"
+                        className="w-full h-full flex-none relative bg-zinc-900 snap-center"
                       >
                         <video 
                           src={url}
@@ -266,6 +291,20 @@ export default function MembershipPanel({ memberships }: { memberships: Product[
                       </div>
                     ))}
                   </div>
+
+                  {/* Navigation Arrows */}
+                  <button 
+                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); scrollVideo('left'); }}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full bg-black/40 hover:bg-red-600/80 text-white transition-all z-40 backdrop-blur-sm pointer-events-auto"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                  <button 
+                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); scrollVideo('right'); }}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full bg-black/40 hover:bg-red-600/80 text-white transition-all z-40 backdrop-blur-sm pointer-events-auto"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
 
                   {/* Internal UI Overlays */}
                   <div className="absolute bottom-6 inset-x-0 flex flex-col items-center justify-end z-30 pointer-events-none">
