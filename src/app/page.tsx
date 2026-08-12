@@ -47,6 +47,7 @@ export default async function Home() {
           loop 
           muted 
           playsInline
+          preload="auto"
           className="absolute inset-0 z-0 w-full h-full object-cover object-[center_top] sm:object-center opacity-60 pointer-events-none"
         />
         

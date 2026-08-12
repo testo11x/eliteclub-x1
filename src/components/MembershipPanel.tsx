@@ -257,6 +257,7 @@ export default function MembershipPanel({ memberships }: { memberships: Product[
                           loop
                           muted
                           playsInline
+                          preload="metadata"
                           className="absolute top-0 left-0 w-full h-full object-cover z-10"
                         />
                         
