@@ -11,6 +11,7 @@ export default function ProductCard({ product }: { product: Product }) {
   const { addItem, items } = useCartStore()
   const [isAdded, setIsAdded] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [activeIndex, setActiveIndex] = useState(0)
   const scrollRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
 
@@ -36,6 +37,12 @@ export default function ProductCard({ product }: { product: Product }) {
     }
   }
 
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const el = e.currentTarget
+    const index = Math.round(el.scrollLeft / el.clientWidth)
+    setActiveIndex(index)
+  }
+
   const mediaCount = (product.video_url ? 1 : 0) + (product.image_url ? 1 : 0) + (product.image_url_2 ? 1 : 0) + (product.image_url_3 ? 1 : 0)
 
   return (
@@ -54,7 +61,7 @@ export default function ProductCard({ product }: { product: Product }) {
         <div className="absolute inset-0 bg-gradient-to-br from-red-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 pointer-events-none" />
         
         {(product.video_url || product.image_url) ? (
-          <div ref={scrollRef} className="w-full h-full flex overflow-x-auto snap-x snap-mandatory scrollbar-none relative z-10">
+          <div ref={scrollRef} onScroll={handleScroll} className="w-full h-full flex overflow-x-auto snap-x snap-mandatory scrollbar-none relative z-10">
             {product.video_url && (
               <video 
                 src={product.video_url} 
@@ -86,10 +93,14 @@ export default function ProductCard({ product }: { product: Product }) {
         {((product.video_url ? 1 : 0) + (product.image_url ? 1 : 0) + (product.image_url_2 ? 1 : 0) + (product.image_url_3 ? 1 : 0) > 1) && (
           <>
             <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 z-20 transition-opacity">
-              {product.video_url && <div className="w-1.5 h-1.5 rounded-full bg-white/80"></div>}
-              {product.image_url && <div className="w-1.5 h-1.5 rounded-full bg-white/40"></div>}
-              {product.image_url_2 && <div className="w-1.5 h-1.5 rounded-full bg-white/40"></div>}
-              {product.image_url_3 && <div className="w-1.5 h-1.5 rounded-full bg-white/40"></div>}
+              {[
+                product.video_url, 
+                product.image_url, 
+                product.image_url_2, 
+                product.image_url_3
+              ].filter(Boolean).map((_, i) => (
+                <div key={i} className={`w-1.5 h-1.5 rounded-full transition-colors ${activeIndex === i ? 'bg-white/80' : 'bg-white/40'}`}></div>
+              ))}
             </div>
             
             {/* Navigation Arrows */}
